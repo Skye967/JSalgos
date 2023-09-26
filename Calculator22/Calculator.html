@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<style>
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 100px;
+    }
+
+    .main {
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        font-size: x-large;
+        text-align: center;
+        background-color: black;
+        margin: 20px;
+    }
+
+    .main div {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .main div button{
+        width: 25%;
+        border-radius: 10%;
+    }
+
+    .main div button:last-child {
+        background-color: orange;
+    }
+
+    .main div:last-of-type button:nth-child(-n+2){
+        width: 38%;
+    }
+
+    .display {
+        border: 3px solid black;
+    }
+
+    display table, th{
+        color: whitesmoke;
+        background-color: rgb(62, 62, 62);
+    }
+
+    .display table, td, th{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .display table td, th{
+        width: 100px;
+        text-align: center;
+    }
+
+
+    
+</style>
+<body>
+<div class="container">
+    <div class="main">
+        <table >
+            <tr>
+                <thead>
+                    <input id="enter" placeholder="0" type="text" >
+                </thead>
+            </tr>
+            <div>
+                <button onclick="buttons(1)">1</button>
+                <button onclick="buttons(2)">2</button>
+                <button onclick="buttons(3)">3</button>
+                <button onclick="buttons('A')">A</button>
+            </div>
+            <div>
+                <button onclick="buttons(4)">4</button>
+                <button onclick="buttons(5)">5</button>
+                <button onclick="buttons(6)">6</button>
+                <button onclick="buttons('S')">S</button>
+            </div>
+            <div>
+                <button onclick="buttons(7)">7</button>
+                <button onclick="buttons(8)">8</button>
+                <button onclick="buttons(9)">9</button>
+                <button onclick="buttons('D')">D</button>
+            </div>
+            <div>
+                <button style="width:75%;" onclick="buttons(0)">0</button>
+                <button onclick="buttons('F')">F</button>
+            </div>
+            <div >
+                <button onclick="buttons('AC')">AC</button>
+                <button onclick="buttons('.')">.</button>
+                <button onclick="buttons('G')">G</button>
+            </div>
+        </table>
+    </div>
+    <div class="display">
+        <table>
+                <tr class="displayHead">
+                    <thead>
+                        <th>Inches to Millimeters</th>
+                        <th>Millimeters to Inches</th>
+                        <th>Radius to Diameter</th>
+                        <th>Diameter to Radius</th>
+                        <th>Area</th>
+                    </thead>
+                </tr>
+                <tr>
+                    <td class="IM"></td>
+                    <td class="MI"></td>
+                    <td class="RD"></td>
+                    <td class="DR"></td>
+                    <td class="A"></td>
+                </tr>
+        </table>
+    </div>
+</div>      
+</body>
+<script>
+
+    var inchToMM = 0;
+    var MMToInch = 0;
+    var radiusToDiameter = 0;
+    var DiameterToRadius = 0;
+    var Area = 0;
+    var conversions = {ITM:inchToMM, MTI:MMToInch, RTD:radiusToDiameter, DTR:DiameterToRadius, A:Area}
+    console.log(conversions)
+
+    const itmDisplay = document.querySelector(".IM")
+    itmDisplay.innerHTML = inchToMM
+    
+    const mtiDisplay = document.querySelector(".MI")
+    mtiDisplay.innerHTML = MMToInch
+
+    const rtdDisplay = document.querySelector(".RD")
+    rtdDisplay.innerHTML = radiusToDiameter
+
+    const dtrDisplay = document.querySelector(".DR")
+    dtrDisplay.innerHTML = DiameterToRadius
+
+    const areaDisplay = document.querySelector(".A")
+    areaDisplay.innerHTML = Area
+    
+    const calculate = document.getElementById("enter")
+    calculate.addEventListener('input', calculateThis)
+    
+    function buttons(e){
+        switch(e){
+            case "A":
+                calculate.value = inchToMM
+                return calculateThis()
+                break
+            case "S":
+                calculate.value = MMToInch
+                return calculateThis()
+                break
+            case "D":
+                calculate.value = radiusToDiameter
+                return calculateThis()
+                break
+            case "F":
+                calculate.value = DiameterToRadius
+                return calculateThis()
+                break
+            case "G":
+                calculate.value = Area
+                return calculateThis()
+                break
+
+        }
+        if(e == "AC"){
+            calculate.value = ""
+            return ;
+        }
+        if(isNaN(e)){
+            return console.log("nan")
+        }
+        calculate.value += e;
+        calculateThis()
+    } 
+
+
+    function calculateThis(e){
+        var num = 0;
+        if (!isNaN(calculate.value)){
+            num = parseFloat(calculate.value)
+        } else {
+            return 
+        }
+
+        inchToMM = num * 25.4;
+        MMToInch = num / 25.4;
+        radiusToDiameter = num * 2;
+        DiameterToRadius = num / 0.5;
+        Area = 3.1416 * (num / 2)**2;
+
+        itmDisplay.innerHTML = inchToMM
+        mtiDisplay.innerHTML = MMToInch
+        rtdDisplay.innerHTML = radiusToDiameter
+        dtrDisplay.innerHTML = DiameterToRadius
+        areaDisplay.innerHTML = Area
+
+        conversions = {ITM:inchToMM, MTI:MMToInch, RTD:radiusToDiameter, DTR:DiameterToRadius, A:Area}
+    } 
+</script>
+</html>
